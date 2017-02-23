@@ -1,4 +1,5 @@
 require_relative('../models/truck.rb')
+require_relative('../models/partload.rb')
 
 require('pry-byebug')
 
@@ -16,3 +17,14 @@ truck1 = Truck.new({
   'deliver_y' => 9827
 })
 truck1.save
+
+partload1 = PartLoad.new({
+  'pvolume' => 200,
+   'pcollect_x' => 342,
+    'pcollect_y' => 4244,
+     'pdeliver_x' => 432,
+      'pdeliver_y' => 5432,
+       'allocated' => FALSE,
+        'flex' => TRUE
+  })
+partload1.save
