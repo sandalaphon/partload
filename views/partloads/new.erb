@@ -1,9 +1,9 @@
-
-
+<link rel="stylesheet" type="text/css" href="/form.css">
+<div class="form">
 <p>Please Enter Partload Details<p>
 
 <form method="POST" action="/partloads"> 
-
+<div class="same-line">
   <label for="pname">Name</label> 
     <input type="text" name="name" id="pname"/>
 
@@ -12,7 +12,8 @@
 
     <label for="pcx">Collect x</label> 
     <input type="number" name="pcollect_x" id="pcx"/>
-
+    </div>
+    <div class="same-line">
     <label for="pcy">Collect y</label> 
     <input type="number" name="pcollect_y" id="pcy"/>
 
@@ -21,18 +22,18 @@
 
     <label for="pdx">Deliver y</label> 
     <input type="number" name="pdeliver_y" id="pdx"/>
+    </div>
 
-    <label hidden for="allocated">Is the load allocated?</label> 
+    <label hidden for="allocated"></label> 
     <input hidden type="radio" name="allocated" value="true" id="allocated" />
     <input hidden type="radio" name="allocated" value="false" id="allocated" checked/>
-
+    <div class="same-line">
     <label for="flex">Is the client flexible on delivery dates?</label>
     <input type="radio" name="flex" value="true" id="flex"/>Yes
     <input type="radio" name="flex" value="false" id= "flex"/>No
-
+    </div>
     <input type="submit" value="Save PartLoad"/>
 
-
-  
-
 </form>
+
+</div>

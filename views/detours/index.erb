@@ -1,6 +1,6 @@
 
 <h1>Detours</h1>
-<table>
+<table class="center">
   <tr>
    <th>Detour Id</th>
     <th></th>
@@ -9,6 +9,8 @@
     <th>PartLoad Id</th>
     <th></th>
     <th>Detour Distance</th>
+    <th></th>
+    <th>Detour Type</th>
   </tr>
 
   <% @detours.each do |detour|  %>
@@ -21,6 +23,8 @@
     <td><%= detour.partload_id %></td>
     <td>|</td>
     <td><%= detour.detour_distance %></td>
+    <td>|</td>
+    <td><%= detour.detour_type %></td>
   </tr>
 
   <%end%>

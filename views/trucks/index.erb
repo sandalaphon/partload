@@ -1,10 +1,15 @@
 <h1>Trucks</h1>
+<a href="/trucks/new">Add a new Truck</a>
 
-<table>
+<table class="center">
   <tr>
     <th>Name of Truck</th>
     <th></th>
     <th>Type of Truck</th>
+    <th></th>
+    <th>Has PartLoad?</th>
+    <th></th>
+    <th>Truck id</th>
     
   </tr>
   <% @trucks.each do |truck| %>
@@ -12,6 +17,10 @@
     <td><%= truck.name %></td>
     <td>|</td>
     <td><%= truck.type %></td>
+    <td>|</td>
+    <td><%= truck.has_part_load %></td>
+    <td>|</td>
+    <td><%= truck.id %></td>
   </tr>
 
   <%end%>

@@ -1,6 +1,8 @@
-<h1>Current Unallocated Partloads</h1>
 
-<table>
+
+<h1>Current Partloads</h1>
+
+<table class="center">
   <tr>
     <th>Name Partload Customer</th>
     <th></th>
@@ -8,7 +10,9 @@
     <th></th>
     <th>Is this partload allocated?</th>
     <th></th>
-    <th>Check to see if load can be allocated?</th>
+    <th>Allocate?</th>
+    <th></th>
+    <th>Unallocate?</th>
   </tr>
   <% @partloads.each do |partload| %>
   <tr>
@@ -20,6 +24,10 @@
     <form action="/partloads/<%= partload.allocated=="f" ? partload.id : 0 %>/allocate" method="post">
     <td>  |  </td>
     <td> <input type="submit" value="Allocate" /></td>
+    </form>
+    <form action="/partloads/<%= partload.allocated=="t" ? partload.id : 0 %>/unallocate" method="post">
+    <td>  |  </td>
+    <td> <input type="submit" value="Unallocate" /></td>
     </form>
   </tr>
   <%end%>

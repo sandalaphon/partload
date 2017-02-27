@@ -1,0 +1,66 @@
+<p>Please Enter New Truck Details<p>
+
+<link rel="stylesheet" type="text/css" href="/form.css">
+<div class="form">
+
+
+<form method="POST" action="/trucks"> 
+<span class="avoidwrap">  
+  <label for="tname">Name</label> 
+    <input type="text" name="name" id="tname"/>
+    </span>
+    <span class="avoidwrap"> 
+  <label for="type">Type of Truck</label> 
+    <input type="text" name="type" id="type"/>
+    </span>
+    <span class="avoidwrap"> 
+    <label for="dx">Depot x</label> 
+    <input type="number" name="depot_x" id="dx"/>
+    </span>
+    <span class="avoidwrap"> 
+    <label for="dy">Depot y</label> 
+    <input type="number" name="depot_y" id="dy"/>
+    </span>
+    <span class="avoidwrap"> 
+    <label for="cap">Capacity</label> 
+    <input type="number" name="capacity" id="cap"/>
+    </span>
+    <span class="avoidwrap"> 
+    <label for="anchor_volume">Anchor Volume</label> 
+    <input type="number" name="anchor_volume" id="anchor_volume"/>
+    </span>
+    <span class="avoidwrap"> 
+    <label for="cdate">Collection Date</label> 
+    <input type="date" name="collection_date" id="cdate"/> 
+    </span>
+    <span class="avoidwrap"> 
+    <label for="ddate">Delivery Date</label> 
+    <input type="date" name="delivery_date" id="ddate"/>
+    </span>
+    <span class="avoidwrap"> 
+    <label for="cx">Collect x</label> 
+    <input type="number" name="collect_x" id="cx"/>
+    </span>
+    <span class="avoidwrap"> 
+    <label for="cy">Collect y</label> 
+    <input type="number" name="collect_y" id="cy"/>
+    </span>
+    <span class="avoidwrap"> 
+    <label for="dex">Deliver x</label> 
+    <input type="number" name="deliver_x" id="dex"/>
+    </span>
+    <span class="avoidwrap"> 
+    <label for="dey">Deliver y</label> 
+    <input type="number" name="deliver_y" id="dey"/>
+    </span>
+    <span class="avoidwrap"> 
+    <label hidden for="haspload"></label> 
+    <input hidden type="radio" name="has_part_load" value="true" id="haspload" />
+    <input hidden type="radio" name="has_part_load" value="false" id="haspload" checked/>
+    </span>
+    <input type="submit" value="ADD TRUCK"/>
+  
+
+</form>
+
+</div>

@@ -38,12 +38,12 @@ truck2 = Truck.new({
   'collect_y' => 456,
   'deliver_x' => 4323,
   'deliver_y' => 827,
-  'has_part_load' => true
+  'has_part_load' => false
 })
 truck2.save
 
 truck3 = Truck.new({
-  'name' => 'JN32',
+  'name' => 'JX55',
   'type' => '18t',
   'depot_x' => 1000,
   'depot_y' => 1000,
@@ -55,7 +55,7 @@ truck3 = Truck.new({
   'collect_y' => 4240,
   'deliver_x' => 430,
   'deliver_y' => 5000,
-  'has_part_load' => true
+  'has_part_load' => false
 })
 truck3.save
 
@@ -71,6 +71,18 @@ partload1 = PartLoad.new({
         'flex' => FALSE
   })
 partload1.save
+
+partload2 = PartLoad.new({
+  'name' => 'Debbie Harry',
+  'pvolume' => 200,
+   'pcollect_x' => 3420,
+    'pcollect_y' => 244,
+     'pdeliver_x' => 432,
+      'pdeliver_y' => 5432,
+       'allocated' => FALSE,
+        'flex' => FALSE
+  })
+partload2.save
 
 # detour1 = Detour.new({
 # 'partload_id'=>partload1.id,

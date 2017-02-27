@@ -8,3 +8,4 @@ get "/detours" do
   @detours=Detour.all
 erb (:"detours/index")
 end
+

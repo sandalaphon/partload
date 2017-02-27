@@ -42,11 +42,17 @@ class PartLoad
   end
 
   def truck
-    sql = "SELECT  * FROM trucks  
+    sql = "SELECT  trucks.* FROM trucks  
       INNER JOIN detours  ON detours.truck_id = trucks.id WHERE detours.partload_id = #{@id}
     "
-    hashs = SqlRunner.run(sql)
-    Truck.new(hashs.first)
+    hashes = SqlRunner.run(sql)
+    Truck.new(hashes.first)
+  end
+
+  def detour
+    sql = "SELECT * FROM detours WHERE partload_id=#{@id}"
+    dhash = SqlRunner.run(sql)
+    return Detour.new(dhash.first)
   end
 
   def update

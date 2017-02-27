@@ -20,15 +20,27 @@ post '/partloads' do
  redirect '/partloads'
 end
 
- get 'partloads/0/allocate' do
-  erb(:"partloads/allocated")
-  end
 
 post '/partloads/0/allocate' do
   erb(:"partloads/allocated")
   end
 
+post '/partloads/0/unallocate' do
+  erb(:"partloads/unallocate")
+end
 
+post '/partloads/:id/unallocate' do
+  pload = PartLoad.find(params[:id])
+  our_detour= pload.detour
+  pload.allocated =false
+  pload.update
+  our_truck = pload.truck
+  our_truck.has_part_load =false
+  our_truck.update
+  our_detour.delete
+  
+  redirect to '/partloads'
+  end
 
 post '/partloads/:id/allocate' do
   pload = PartLoad.find(params[:id])
@@ -44,9 +56,9 @@ post '/partloads/:id/allocate' do
   pload.allocated=true
   pload.update
   dtour.save
-  # pload.truck.has_part_load =true
-  # pload.truck.name="this"
-  # pload.truck.update
+  our_truck = pload.truck
+  our_truck.has_part_load =true
+  our_truck.update
   
   redirect to '/detours'
 end
