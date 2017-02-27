@@ -1,0 +1,64 @@
+<h1>Current Unallocated Partloads</h1>
+
+<table>
+  <tr>
+    <th>Name Partload Customer</th>
+    <th></th>
+    <th>Volume of Partload</th>
+    <th></th>
+    <th>Is this partload allocated?</th>
+    <th></th>
+    <th>Check to see if load can be allocated?</th>
+  </tr>
+  <% @partloads.each do |partload| %>
+  <tr>
+    <td><%=partload.name%></td>
+    <td>  |  </td>
+    <td><%=partload.pvolume%></td>
+    <td>  |  </td>
+    <td><%=partload.allocated%></td>
+    <form action="/partloads/<%= partload.allocated=="f" ? partload.id : 0 %>/allocate" method="post">
+    <td>  |  </td>
+    <td> <input type="submit" value="Allocate" /></td>
+    </form>
+  </tr>
+  <%end%>
+</table>
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>Part Loads</title>
+  <link rel="stylesheet" type="text/css" href="table.css">
+  <style> .td{ width:200px;}</style>
+  
+</head>
+<body>
+
+
+
+
+<div class="table">
+  <div class="thead">
+    <div class="tr">
+      <div class="td">Name of Customer</div>
+      <div class="td">Volume of Partload</div>
+      <div class="td">Is it Allocated?</div>
+      <div class="td">Allocate Part-Load</div>
+      
+    </div>
+  </div>
+  <% @partloads.each do |partload| %>
+  <div class="tbody">
+    <form class="tr">
+      <div class="td"><%=partload.name%></div>
+      <div class="td"><%=partload.pvolume%></div>
+      <div class="td"><%=partload.allocated%></div>
+      <div class="td action"><button type="button" onclick="<%=partload%>">Allocate</button></div>
+    </form>
+    <%end%>
+    
+  </div>
+</div>
+</body>
+</html> -->

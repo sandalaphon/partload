@@ -1,0 +1,38 @@
+
+
+<p>Please Enter Partload Details<p>
+
+<form method="POST" action="/partloads"> 
+
+  <label for="pname">Name</label> 
+    <input type="text" name="name" id="pname"/>
+
+  <label for="pvol">Volume</label> 
+    <input type="number" name="pvolume" id="pvol"/>
+
+    <label for="pcx">Collect x</label> 
+    <input type="number" name="pcollect_x" id="pcx"/>
+
+    <label for="pcy">Collect y</label> 
+    <input type="number" name="pcollect_y" id="pcy"/>
+
+    <label for="pdx">Deliver x</label> 
+    <input type="number" name="pdeliver_x" id="pdx"/>
+
+    <label for="pdx">Deliver y</label> 
+    <input type="number" name="pdeliver_y" id="pdx"/>
+
+    <label hidden for="allocated">Is the load allocated?</label> 
+    <input hidden type="radio" name="allocated" value="true" id="allocated" />
+    <input hidden type="radio" name="allocated" value="false" id="allocated" checked/>
+
+    <label for="flex">Is the client flexible on delivery dates?</label>
+    <input type="radio" name="flex" value="true" id="flex"/>Yes
+    <input type="radio" name="flex" value="false" id= "flex"/>No
+
+    <input type="submit" value="Save PartLoad"/>
+
+
+  
+
+</form>

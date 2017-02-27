@@ -1,0 +1,27 @@
+
+<h1>Detours</h1>
+<table>
+  <tr>
+   <th>Detour Id</th>
+    <th></th>
+    <th>Truck Id</th>
+    <th></th>
+    <th>PartLoad Id</th>
+    <th></th>
+    <th>Detour Distance</th>
+  </tr>
+
+  <% @detours.each do |detour|  %>
+
+  <tr>
+     <td><%= detour.id %></td>
+    <td>|</td>
+    <td><%= detour.truck_id %></td>
+    <td>|</td>
+    <td><%= detour.partload_id %></td>
+    <td>|</td>
+    <td><%= detour.detour_distance %></td>
+  </tr>
+
+  <%end%>
+</table>

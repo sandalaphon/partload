@@ -1,0 +1,18 @@
+<h1>Trucks</h1>
+
+<table>
+  <tr>
+    <th>Name of Truck</th>
+    <th></th>
+    <th>Type of Truck</th>
+    
+  </tr>
+  <% @trucks.each do |truck| %>
+  <tr>
+    <td><%= truck.name %></td>
+    <td>|</td>
+    <td><%= truck.type %></td>
+  </tr>
+
+  <%end%>
+</table>
