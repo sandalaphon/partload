@@ -16,6 +16,11 @@ require_relative('../models/alldetours.rb')
   erb(:"/alldetours/index")
   end
 
+  get '/alldetours/optimise' do
+  @result =AllDetour.find_optimal
+  erb(:"/alldetours/optimise")
+    end
+
   def alldetours_options_hash(pload)
     trucks_distances = pload.minimise_distance[3] 
     trucks_distances.each{ |hash| 
