@@ -86,31 +86,31 @@ class AllDetour
      end
   
     def select_best(pop_array)
+      #check
       dist_hashes = pop_array.map{|pc| {pc=> sum_distances(pc)}}
       dist_hashes.sort!{|x,y|x.values[0] <=> y.values[0]}
-      survivors=dist_hashes.first(10)
-      return survivors
+      survivor_hashes=dist_hashes.first(10)
+       survivors =survivor_hashes.map{|hash| hash.keys}
+       return survivors
     end
 
-    #ALL SUBSEQUENT GENERATIONS LOOK LIKE THIS:
-    # [{[[pload_id, truck.id, detour_distance, detour_type ], [...], [...],  ... ] => TOTAL DISTANCE}, {[[pload_id, truck.id, detour_distance, detour_type ], [...], [...],  ... ] => TOTAL DISTANCE}, ....]
-    #THINK OF IT LIKE THIS [{parent=>dist}, {parent=>dist}, ...]
+   # look like this [[pload_id, truck.id, detour_distance, detour_type ], [...], [...],  ... ]
+    
 
     def check_compatibility(parent1, parent2)
-      parent1.shuffle!
-      subs1 =parent1.pop
-      !is_truck_in(parent2, subs1) ? direct_substitution(parent2,subs1) : is_in_same_place(parent2,subs1) ? chance_mutate(parent1, parent2) : sex_breed(parent1, parent2, subs1)
+      par=parent1
+      subs1 =par.pop
+      !is_truck_in(parent2, subs1) ? direct_substitution(par, parent2, subs1) : is_in_same_place(parent2,subs1) ? chance_mutate(parent1, parent2) : sex_breed(par, parent2, subs1)
     end
     #REMEMBER PARENT1 HAS POPPED
-    @popped_stuff=[]
+    @popped_stuff = []
 
     def find_a_spare_truck(parent)
-      w=[]
-      parent.each{|x| w+=x.keys}
-      trucks_in_p =w.map{|y| y[1]}
+      truckids=[]
+      parent.each{|x| truckids+=x[1]}
       spare_trucks = @trucks_ids
-     trucks_in_p.each{|x| spare_trucks-[x]}
-     return trucks_in_p.pop
+     truckids.each{|x| spare_trucks-[x]}
+     return spare_trucks.pop
     end
 
     def find(pload_id, t_id)
@@ -120,37 +120,62 @@ class AllDetour
     end
 
     def chance_mutate(parent)
+      chance=rand(100)
+      return parent if chance<90
       new_truck_id = find_a_spare_truck(parent)
       par=parent
       popped = par.pop
-      ploadid =popped.keys.first[0]
+      ploadid =popped[0]
       alldetour = find(ploadid, new_truck_id)
-      new_pt={[alldetour.partload_id, alldetour.truck_id, alldetour.detour_distance, alldetour.detour_type]}
+      new_pt = [alldetour.partload_id, alldetour.truck_id, alldetour.detour_distance, alldetour.detour_type] 
       new_life= par+=new_pt
       return new_life
     end
 
-    def direct_substitution(parent1, parent2, subs1)
+    def direct_substitution(popped_parent1, parent2, subs1)
+      par2=parent2
+      @popped_stuff+=par2.pop
+      new_life =par2+=subs1
+      return new_life
     end
 
 
 
-    def sex_breed(parent1, parent2)
-      parent1.shuffle!
-      parent2.shuffle!
-      subs1 =parent1.pop
-      is_truck_in(parent2, subs1) ? remove_n_replace(parent2, subs1) : mutate(parent2)
+
+#PARENT1 HAS POPPED
+    def sex_breed(popped_parent1, parent2, subs1)
+     position, displaced_truck, new_subs = find_position_and_truck(parent2, subs1)
+     par=parent2
+     truckid=subs1[1]
+     par.delete_at(position) 
+    pos_truck = findposition_by_truck(par, displaced_truck)
+    ploadid =par[pos_truck][0]
+    alldetour =find(ploadid, truckid)
+    new_sub_piece=[alldetour.partload_id, alldetour.truck_id, alldetour.detour_distance, alldetour.detour_type]
+    par.delete_at(pos_truck)
+    par += subs1
+    par += new_sub_piece
+    new_life=par
+    return new_life
     end
 
-    def remove_n_replace(parent2,subs1)
-     ind=0
-      parent2.each_with_index{|hash, i| ind= i if hash.keys==subs1.keys}
-      missing1=parent2.keys.delete_if{|hash| hash[1]==subs1[1]}
-      sql= "SELECT * FROM alldetours where partload"
+    def find_position_and_truck(parent,subs1)
+       position=0
+      parent.each_with_index{|unit, i| position=i if unit[0]==subs1[0]}
+      new_subs =parent[position]
+      displaced_truck=new_subs[1]
+      return [position, displaced_truck, new_subs]
     end
+
+    def findposition_by_truck(displaced_truck)
+      position=0
+      parent.each_with_index{|x,i| position=i if x[0]==displaced_truck}
+      return position
+    end
+   
 
     def is_truck_in(parent2, subs1)
-      parent2.keys.any?{|hash| hash[1]==subs1[1]}
+      parent2.any?{|array| array[1]==subs1[1]}
     end
     
 
