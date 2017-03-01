@@ -1,5 +1,7 @@
 
 DROP TABLE IF EXISTS detours;
+DROP TABLE IF EXISTS alldetours;
+DROP TABLE IF EXISTS allroutes;
 DROP TABLE IF EXISTS trucks;
 DROP TABLE IF EXISTS partloads;
 
@@ -40,7 +42,22 @@ CREATE TABLE detours (
   detour_distance INT4,
   detour_type VARCHAR(255),
   detour_time INT4
-)
+);
+
+CREATE TABLE allroutes (
+id SERIAL4 PRIMARY KEY,
+partload_id INT4,
+json_array_hashes VARCHAR(2200)
+);
+
+CREATE TABLE alldetours (
+  id SERIAL4 PRIMARY KEY,
+  partload_id INT4 REFERENCES partloads(id),
+  truck_id INT4 REFERENCES trucks(id),
+  detour_distance INT4,
+  detour_type VARCHAR(255),
+  detour_time INT4
+);
 
 
 

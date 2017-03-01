@@ -115,40 +115,10 @@ def dist_between_points(x1,y1,x2,y2)
  return Math.sqrt((x1-x2)**2+(y1-y2)**2)
 end
 
-# def superupdate(truckk)
-#   sql = "UPDATE trucks SET (
-#   id,
-#   name,
-#   type,
-#   depot_x,
-#   depot_y,
-#   capacity,
-#   anchor_volume,
-#   collection_date,
-#   delivery_date,
-#   collect_x,
-#   collect_y,
-#   deliver_x,
-#   deliver_y,
-#   has_part_load
-#   ) = (
-#   '#{truckk.id}'
-#   '#{truckk.name}',
-#   '#{truckk.type}',
-#   #{truckk.depot_x},
-#   '#{truckk.depot_y}',
-#   '#{truckk.capacity}',
-#   '#{truckk.anchor_volume}',
-#   '#{truckk.collection_date}',
-#   '#{truckk.delivery_date}',
-#   '#{truckk.collect_x}',
-#   '#{truckk.collect_y}',
-#   '#{truckk.deliver_x}',
-#   '#{truckk.deliver_y}',
-#   '#{truckk.has_part_load}'
-#   ) WHERE id=#{@id}
-#   "
-#   SqlRunner.run(sql)
-#   end
+def partloads()
+  sql = "SELECT partloads.* FROM partloads INNER JOIN alldetours ON alldetours.partload_id = partload.id WHERE alldetours.truck_id = #{@id}"
+    hashes=SqlRunner.run(sql)
+   return hashes.map {|hash| PartLoad.new(hash)}
+end
 
 end

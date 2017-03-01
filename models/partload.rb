@@ -49,6 +49,12 @@ class PartLoad
     Truck.new(hashes.first)
   end
 
+  def trucks
+      sql = "SELECT trucks.* FROM trucks INNER JOIN alldetours ON alldetours.truck_id = truck.id WHERE alldetours.partload_id = #{@id}"
+        hashes=SqlRunner.run(sql)
+       return hashes.map {|hash| Truck.new(hash)}
+    end
+
   def detour
     sql = "SELECT * FROM detours WHERE partload_id=#{@id}"
     dhash = SqlRunner.run(sql)
@@ -68,17 +74,25 @@ class PartLoad
   #depot=A, collect=B, deliver=c, partload-collect=d and partload deliver=e
   #distances array = [ad, bd, cd, ae, be, ce]
   trucks_that_can =Truck.all.select{|truck| ((truck.capacity - truck.anchor_volume) > @pvolume) && truck.has_part_load=="f"}
+
   return 0 if trucks_that_can==[]
-  anchor_dists= trucks_that_can.map{|truck| truck.anchor_distance}
+
+  anchor_dists = trucks_that_can.map{|truck| truck.anchor_distance}
 
   #distances is an array of arrays of each trucks possible distances
   distances = trucks_that_can.map{|truck| all_dist_array(truck.depot_x, truck.depot_y, truck.collect_x, truck.collect_y, truck.deliver_x, truck.deliver_y, @pcollect_x, @pcollect_y, @pdeliver_x, @pdeliver_y)}
 
    #best for each is an array of hashes of index and min route distances for trucks that can. [{index => min distance}, {3 => 54}, etc] see best route for what each index is 0 = j1, 1=j2 etc
-   best_for_each=distances.map {|tdistances| best_route(tdistances) }
+   best_for_each =distances.map {|tdistances| best_route(tdistances) }
+
+   #journey minus anchor_dist 
    detour_min_hashs=[]
+
+
    best_for_each.each_with_index{|hash, index| detour_min_hashs << {hash.keys[0]=>hash.values[0] - anchor_dists[index]}}
    
+   better_detour_min_hashs = detour_min_hashs
+   better_detour_min_hashs.each_with_index{|bhash, i| bhash[:truck]=trucks_that_can[i].id}
    
 
    
@@ -107,13 +121,14 @@ class PartLoad
      #the following is to find the index of our truck in trucks that can
      truck_index=0
      detour_min_hashs.each_with_index{|i,j| truck_index=j if i==sorted[0]}
+
      our_truck=trucks_that_can[truck_index]
 
 
      detour_distance = sorted.first.first[1]
      truck_id = our_truck.id
 
-     return [truck_id, detour_distance, detour_type]
+     return [truck_id, detour_distance, detour_type, detour_min_hashs]
      
    end
 
@@ -168,6 +183,9 @@ class PartLoad
       journeys.each_with_index{|j,i| opt_route_n_dist[i]=j if j==minimum}
       return opt_route_n_dist
     end
+def detours
+end
+
   end
 
   # anchor_distance(our_truck.depot_x, our_truck.depot_y, our_truck.collect_x, our_truck.collect_y, our_truck.deliver_x, our_truck.deliver_y)

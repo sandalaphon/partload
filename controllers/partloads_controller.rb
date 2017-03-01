@@ -3,6 +3,8 @@ require( 'sinatra/contrib/all' )
 require_relative( '../models/partload.rb' )
 require_relative( '../models/detour.rb' )
 require_relative( '../models/truck.rb' )
+require_relative( '../models/allroute.rb' )
+require_relative('../models/alldetours.rb')
 
 get '/partloads' do
   @partloads = PartLoad.all()
@@ -19,6 +21,11 @@ post '/partloads' do
  @partload.save
  redirect '/partloads'
 end
+
+# get '/partloads/optimist' do 
+# AllRoute.make_json
+# redirect to '/detours'
+# end
 
 
 post '/partloads/0/allocate' do
